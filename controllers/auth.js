@@ -35,6 +35,7 @@ authRouter.post('/signup',async (req, res) => {
     authRouter.get('/:username',async (req, res) => {
         const user = req.params.username;
         const userData = await User.findOne({ username:user });
+        delete userData.password
         try {
             res
                 .status(201)
@@ -55,6 +56,7 @@ authRouter.post('/signup',async (req, res) => {
             const question = req.body.id 
             userData.doneQuestions.push(question)
             await userData.save();
+            delete userData.password
             res
                 .status(201)
                 .json({ message: "User updated successfully", success: true, user:userData});
@@ -71,11 +73,9 @@ authRouter.post('/signup',async (req, res) => {
         const userData = await User.findOne({ username:user });
         try {
             const question = req.body.id 
-            // console.log(question);
-            // console.log(question==userData.doneQuestions[1])
             userData.doneQuestions=userData.doneQuestions.filter(item=>item!=question)
-            // console.log(userData.doneQuestions)
             await userData.save();
+            delete userData.password
             res
                 .status(201)
                 .json({ message: "User updated successfully", success: true, user:userData});
