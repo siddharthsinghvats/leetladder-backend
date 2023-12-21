@@ -10,7 +10,7 @@ const db = require('./db');
 // create a new server
 const app = express();
 app.use(express.json());
-app.use(cors({origin: 'https://leetladder.netlify.app',credentials: true}));
+app.use(cors());
 
 
 
