@@ -47,7 +47,21 @@ authRouter.post('/signup',async (req, res) => {
         }
 
     })
+// get user count
+authRouter.get('/count/total_user',async (req, res) => {
+    const userData = await User.find({  });
+ 
+    try {
+        res
+            .status(201)
+            .json({ userCount:userData.length});
 
+    }
+    catch (err) {
+        return res.status(500).json({ error: "failed to fetch user count" ,error:err});
+    }
+
+})
     authRouter.put('/',async (req, res) => {
         console.log("here")
         const user = req.body.username;
