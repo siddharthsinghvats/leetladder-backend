@@ -35,7 +35,12 @@ authRouter.post('/signup',async (req, res) => {
     authRouter.get('/:username',async (req, res) => {
         const user = req.params.username;
         const userData = await User.findOne({ username:user });
+        if(!userData){
+            res.status(404).json({error:"user not found"})
+            return
+        }
         delete userData.password
+        
         try {
             res
                 .status(201)
