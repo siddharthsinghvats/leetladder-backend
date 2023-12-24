@@ -52,6 +52,27 @@ authRouter.post('/signup',async (req, res) => {
         }
 
     })
+    authRouter.get('/all/all_users',async (req, res) => {
+        const userData = await User.find({});
+        if(!userData){
+            res.status(404).json({error:"no user found"})
+            return
+        }
+        const data=[];
+        userData.map((element)=>{
+            data.push(element.username);
+        })
+        try {
+            res
+                .status(201)
+                .json({ message: "User fetched successfully", success: true, users:data});
+
+        }
+        catch (err) {
+            return res.status(500).json({ error: "failed to fetch user" ,error:err});
+        }
+
+    })
 // get user count
 authRouter.get('/count/total_user',async (req, res) => {
     const userData = await User.find({  });
